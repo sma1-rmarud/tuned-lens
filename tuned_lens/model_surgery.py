@@ -67,6 +67,7 @@ Norm = Union[
     th.nn.LayerNorm,
     models.llama.modeling_llama.LlamaRMSNorm,
     models.gemma.modeling_gemma.GemmaRMSNorm,
+    models.olmo3.modeling_olmo3.Olmo3RMSNorm,
     nn.Module,
 ]
 
@@ -123,6 +124,8 @@ def get_final_norm(model: Model) -> Norm:
         final_layer_norm = base_model.norm
     elif isinstance(base_model, models.gemma.modeling_gemma.GemmaModel):
         final_layer_norm = base_model.norm
+    elif isinstance(base_model, models.olmo3.modeling_olmo3.Olmo3Model):
+        final_layer_norm = base_model.norm
     else:
         raise NotImplementedError(f"Unknown model type {type(base_model)}")
 
@@ -171,6 +174,8 @@ def get_transformer_layers(model: Model) -> tuple[str, th.nn.ModuleList]:
     elif isinstance(base_model, models.mistral.modeling_mistral.MistralModel):
         path_to_layers += ["layers"]
     elif isinstance(base_model, models.gemma.modeling_gemma.GemmaModel):
+        path_to_layers += ["layers"]
+    elif isinstance(base_model, models.olmo3.modeling_olmo3.Olmo3Model):
         path_to_layers += ["layers"]
     else:
         raise NotImplementedError(f"Unknown model type {type(base_model)}")

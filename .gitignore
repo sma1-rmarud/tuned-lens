@@ -138,3 +138,7 @@ dmypy.json
 .pyre/
 .idea/workspace.xml
 .vscode/launch.json
+
+experiments/*
+!experiments/train_lens.py
+
